@@ -1,3 +1,3 @@
-export interface Verifier {
+export interface EmailVerifier {
   exist: (email: string) => Promise<boolean>
 }

@@ -1,7 +1,8 @@
 import { notFound } from './../../helper/http/http-helper'
-import { Verifier } from './../../../domain/usecases/user-exists'
+import { Verifier } from '../../../domain/usecases/email-verifier'
 import { badRequest, serverError, success } from '../../helper/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validation } from './forgot-password-protocols'
+import LoginService from '../../helper/services/login-service'
 
 export class ForgotPasswordController implements Controller {
   constructor (
@@ -21,7 +22,7 @@ export class ForgotPasswordController implements Controller {
       if (!await this.emailVerifier.exist(email)) {
         return notFound('email')
       }
-      this.loginService.sendForgotPasswordEmail(email)
+      await this.loginService.sendForgotPasswordEmail(email)
       return success('')
     } catch (error) {
       return serverError(error)
