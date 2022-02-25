@@ -1,7 +1,7 @@
 import { nodemailer } from 'nodemailer'
 import EmailSender from '../../../data/protocols/email/email-sender'
 
-export default class EmailAdapter implements EmailSender {
+export class EmailAdapter implements EmailSender {
   constructor (
     private readonly username: string,
     private readonly password: string

@@ -1,6 +1,6 @@
-import { LoadAccountByEmailRepository, Verifier } from './db-user-exists-protocols'
+import { LoadAccountByEmailRepository, EmailVerifier } from './db-user-exists-protocols'
 
-export class DbUserExists implements Verifier {
+export class DbEmailVerifier implements EmailVerifier {
   constructor (
     private readonly loadAccountByEmail: LoadAccountByEmailRepository
   ) {}
