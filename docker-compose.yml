@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+    join-us-backend:
+        build: 
+          context: .
+          dockerfile: server.dockerfile
+        ports: 
+           - "8000:8000"
+        command: npm start
+        depends_on:
+          - database
+        networks:
+          - production
+
+    database:
+        image: mongo
+        volumes:
+          - data:/lucasgois/database
+        networks:
+          - production
+        ports:
+          - "27017:27017"
+
+
+volumes:
+    data:
+
+networks:
+    production:
+        driver: bridge
