@@ -1,13 +1,13 @@
 import { notFound } from './../../helper/http/http-helper'
-import { Verifier } from '../../../domain/usecases/email-verifier'
+import { EmailVerifier } from '../../../domain/usecases/email-verifier'
 import { badRequest, serverError, success } from '../../helper/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, Validation } from './forgot-password-protocols'
-import LoginService from '../../helper/services/login-service'
+import { LoginService } from '../../helper/services/login-service'
 
 export class ForgotPasswordController implements Controller {
   constructor (
     private readonly validator: Validation,
-    private readonly emailVerifier: Verifier,
+    private readonly emailVerifier: EmailVerifier,
     private readonly loginService: LoginService
   ) {}
 
