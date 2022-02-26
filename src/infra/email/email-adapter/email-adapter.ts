@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import EmailSender from '../../../data/protocols/email/email-sender'
+import { EmailSender } from '../../../data/protocols/email/email-sender'
 
 export class EmailAdapter implements EmailSender {
   constructor (

@@ -1,10 +1,10 @@
-import { AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, AddPasswordTokenRepository } from '../../../../data/protocols/db/account'
+import { AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, AddPasswordTokenRepository, UpdatePasswordRepository, LoadAccountByPasswordTokenRepository } from '../../../../data/protocols/db/account'
 import { AccountModel } from '../../../../domain/models/account'
 import { AddAccountModel } from '../../../../domain/usecases/add-account'
 import { AddPasswordTokenModel } from '../../../../domain/usecases/add-password-token'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, AddPasswordTokenRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, AddPasswordTokenRepository,UpdatePasswordRepository, LoadAccountByPasswordTokenRepository {
   async add (account: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
@@ -30,5 +30,18 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     const accountCollection = await MongoHelper.getCollection('accounts')
 
     await accountCollection.updateOne({ email: passwordToken.email },{ $set: { passwordToken: passwordToken.token } })
+  }
+
+  async updatePassword (id: string, newPassword: string): Promise<void> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+
+    await accountCollection.updateOne({ _id: id },{ $set: { password: newPassword } })
+  }
+
+  async loadByPasswordToken (token: string): Promise<AccountModel> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+
+    const document = await accountCollection.findOne({ passwordToken: token })
+    return document && MongoHelper.idMapper(document)
   }
 }

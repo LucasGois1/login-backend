@@ -1,4 +1,4 @@
-import { LoadAccountByEmailRepository, EmailVerifier } from './db-user-exists-protocols'
+import { LoadAccountByEmailRepository, EmailVerifier } from './db-email-verifier-protocols'
 
 export class DbEmailVerifier implements EmailVerifier {
   constructor (

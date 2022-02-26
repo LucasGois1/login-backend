@@ -1,8 +1,8 @@
 import { randomUUID } from 'crypto'
-import { AddPasswordTokenRepository } from '../../../data/protocols/db/account'
-import EmailSender from '../../../data/protocols/email/email-sender'
+import { AddPasswordTokenRepository } from '../../protocols/db/account'
+import { EmailSender } from '../../protocols/email/email-sender'
 
-export class LoginService {
+export class SendEmail {
   constructor (
     private readonly emailService: EmailSender,
     private readonly addPasswordTokenRepository: AddPasswordTokenRepository
