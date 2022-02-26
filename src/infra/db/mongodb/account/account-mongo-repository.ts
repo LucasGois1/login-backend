@@ -29,12 +29,13 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
   async addPasswordToken (passwordToken: AddPasswordTokenModel): Promise<void> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
+    console.log(passwordToken)
+
     await accountCollection.updateOne({ email: passwordToken.email },{ $set: { passwordToken: passwordToken.token } })
   }
 
   async updatePassword (id: string, newPassword: string): Promise<void> {
     const accountCollection = await MongoHelper.getCollection('accounts')
-
     await accountCollection.updateOne({ _id: id },{ $set: { password: newPassword } })
   }
 
