@@ -8,7 +8,8 @@ export class EmailAdapter implements EmailSender {
   ) {}
 
   // async..await is not allowed in global scope, must use a wrapper
-  async send (subject: string, text: string, destinatary: string): Promise<boolean> {
+  send (subject: string, text: string, destinatary: string): boolean {
+    console.log(text)
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -19,12 +20,20 @@ export class EmailAdapter implements EmailSender {
       }
     })
 
-    const response = await transporter.sendMail({
+    const mailOptions = {
       from: `"Lucas Góis 👻" <${this.username}>`,
       to: destinatary,
       subject,
-      text
-    })
-    return new Promise((resolve) => resolve(!!response))
+      text: text
+    }
+
+    console.log(mailOptions)
+    const response = transporter.sendMail(mailOptions)
+
+    if (response) {
+      return true
+    }
+
+    return false
   }
 }

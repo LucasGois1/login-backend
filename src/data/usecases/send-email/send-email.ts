@@ -10,11 +10,12 @@ export class SendEmail {
 
   async sendForgotPasswordEmail (email: string): Promise<boolean> {
     const passwordToken = randomUUID()
-
+    const message = `Para redefinir sua senha, clique no link http://localhost:3000/forgot-password?passwordToken=${passwordToken}`
+    const subject = 'Redefinir senha'
+    console.log(passwordToken)
+    console.log(message)
     await this.addPasswordTokenRepository.addPasswordToken({ email, token: passwordToken })
 
-    const subject = 'Redefinir senha'
-    const message = `Para redefinir sua senha, clique no link http://localhost:3000/forgot-password?passwordToken=${passwordToken}`
-    return await this.emailService.send(subject, message, email)
+    return this.emailService.send(subject, message, email)
   }
 }
